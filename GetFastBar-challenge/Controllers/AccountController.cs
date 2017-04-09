@@ -80,6 +80,13 @@ namespace GetFastBar_challenge.Controllers
             {
                 case SignInStatus.Success:
                     return RedirectToLocal(returnUrl);
+                    //return RedirectToRoute("Default",
+                    //     new
+                    //     {
+                    //         controller = "Manage",
+                    //         action = "Index",
+                    //     }
+                    //);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -392,7 +399,7 @@ namespace GetFastBar_challenge.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Account", "Login");
         }
 
         //
@@ -449,7 +456,7 @@ namespace GetFastBar_challenge.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Account", "Login");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult
