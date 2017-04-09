@@ -54,9 +54,9 @@ namespace GetFastBar_challenge
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "1496967553708685",
+               appSecret: "a9c8a1ea3a07c1f495677ad7f70d8170");
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
