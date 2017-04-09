@@ -3,9 +3,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Configuration;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using System.Collections.Generic;
 using GetFastBar_challenge.Models;
 
 namespace GetFastBar_challenge.Controllers
@@ -63,6 +65,10 @@ namespace GetFastBar_challenge.Controllers
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
                 : "";
 
+            ///my code
+            string stripePublishingKey = ConfigurationManager.AppSettings["stripePublishingKey"];
+
+
             var userId = User.Identity.GetUserId();
             var model = new IndexViewModel
             {
@@ -70,7 +76,9 @@ namespace GetFastBar_challenge.Controllers
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
+                ///mine
+                StripePublishableKey = stripePublishingKey
             };
             return View(model);
         }
