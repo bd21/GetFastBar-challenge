@@ -57,6 +57,11 @@ namespace GetFastBar_challenge.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            //redirects if already logged in
+            if (HttpContext.Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Manage");
+            }
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -79,7 +84,7 @@ namespace GetFastBar_challenge.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Index", "Manage");//profile page
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -139,6 +144,11 @@ namespace GetFastBar_challenge.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            //redirects if already logged in
+            if (HttpContext.Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Manage");
+            }
             return View();
         }
 
@@ -391,8 +401,9 @@ namespace GetFastBar_challenge.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //

@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System.Collections.Generic;
 using GetFastBar_challenge.Models;
+using Stripe;
+
 
 namespace GetFastBar_challenge.Controllers
 {
@@ -56,6 +58,7 @@ namespace GetFastBar_challenge.Controllers
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
+
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
@@ -66,7 +69,7 @@ namespace GetFastBar_challenge.Controllers
                 : "";
 
             ///my code
-            string stripePublishingKey = ConfigurationManager.AppSettings["stripePublishingKey"];
+            string stripePublishableKey = ConfigurationManager.AppSettings["stripePublishableKey"];
 
 
             var userId = User.Identity.GetUserId();
@@ -78,7 +81,7 @@ namespace GetFastBar_challenge.Controllers
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
                 ///mine
-                StripePublishableKey = stripePublishingKey
+                StripePublishableKey = stripePublishableKey
             };
             return View(model);
         }

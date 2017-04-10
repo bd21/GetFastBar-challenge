@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Stripe;
+using System.Configuration;
 
 namespace GetFastBar_challenge
 {
@@ -16,6 +18,8 @@ namespace GetFastBar_challenge
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            StripeConfiguration.SetApiKey(ConfigurationManager.AppSettings["StripeSecretKey"]);
         }
     }
 }

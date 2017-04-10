@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Manage";
 }
-
+@*maybe change this to Models.Manage.IndexViewModel ^^^^^^^*@
 <h2>@ViewBag.Title.</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
@@ -89,11 +89,9 @@
 
                     <div class="col-md-3 col-sm-5 hero-feature">
                         <div>
-                            <form action="/your-server-side-code" method="POST">
+                            <form action="" method="POST">
                                 <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                        @*data-key="@Model.StripePublishableKey"*@
-                                        @*FIX THIS VVVVVVV*@
-                                        data-key="pk_test_MzlT9AtHipK9jE32XtSVOaLz"
+                                        data-key="@Model.StripePublishableKey"
                                         data-label="Add a new card"
                                         data-allow-remember-me="false"
                                         data-image="https://stripe.com/img/documentation/checkout/marketplace.png">

@@ -11,6 +11,11 @@ namespace GetFastBar_challenge.Controllers
     {
         public ActionResult Index()
         {
+            //redirects if already logged in
+            if (HttpContext.Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Manage");
+            }
             return View();
         }
 
