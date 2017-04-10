@@ -82,8 +82,8 @@ namespace GetFastBar_challenge.Controllers
 
 
             //somehow save the customerID, cardID, CC4, company name, expiry object into the database
-            
 
+            
 
             return RedirectToAction("Index", "Manage");
         }
@@ -117,11 +117,6 @@ namespace GetFastBar_challenge.Controllers
                 ///mine
                 StripePublishableKey = stripePublishableKey
             };
-            //if(stripeCustomerId != null)
-            //{
-            //    var cardService = new StripeCardService();
-            //    IEnumerable<StripeCard> response = cardService.List(stripeCustomerId);
-            //}
 
             return View(model);
         }

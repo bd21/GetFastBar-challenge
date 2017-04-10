@@ -96,7 +96,8 @@ namespace GetFastBar_challenge.Controllers
 
             var currentUserID = User.Identity.GetUserId();
             this.Edit((String)currentUserID, customerID, cardID, cc4, company, expiry);
-            return RedirectToAction("Index", "Manage", "1");
+            TempData["notice"] = "Card successfully added!";
+            return RedirectToAction("Index", "Manage");
 
         }
             // GET: AspNetUser/Edit/5
