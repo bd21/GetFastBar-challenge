@@ -30,13 +30,13 @@
         </dd>
         @*
             Phone Numbers can used as a second factor of verification in a two-factor authentication system.
-             
+
              See <a href="https://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
                 for details on setting up this ASP.NET application to support two-factor authentication using SMS.
-             
+
              Uncomment the following block after you have set up two-factor authentication
         *@
-        @*  
+        @*
             <dt>Phone Number:</dt>
             <dd>
                 @(Model.PhoneNumber ?? "None")
@@ -62,34 +62,21 @@
                 There are no two-factor authentication providers configured. See <a href="https://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
                 for details on setting up this ASP.NET application to support two-factor authentication.
             </p>
-            @*@if (Model.TwoFactor)
-                {
-                    using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>Enabled
-                        <input type="submit" value="Disable" class="btn btn-link" />
-                        </text>
-                    }
-                }
-                else
-                {
-                    using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>Disabled
-                        <input type="submit" value="Enable" class="btn btn-link" />
-                        </text>
-                    }
-                }*@
+        </dd>
+        <dt>Current cards on file:</dt>
+        <dd>
+        </dd>
+    </dl>
             <div class="container">
 
                 <!-- Page Features -->
                 <div class="row text-center">
 
                     <div class="col-md-3 col-sm-5 hero-feature">
-                        <div>
-                            <form action="" method="POST">
+                        @using (Html.BeginForm("AddCustomer", "Manage", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <form method="POST">
                                 <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                         data-key="@Model.StripePublishableKey"
                                         data-label="Add a new card"
@@ -97,13 +84,15 @@
                                         data-image="https://stripe.com/img/documentation/checkout/marketplace.png">
                                 </script>
                             </form>
-                        </div>
+                        }
+
                     </div>
                 </div>
                 <!-- /.row -->
 
                 <hr>
             </div>
-        </dd>
-    </dl>
+        
+
+    
 </div>

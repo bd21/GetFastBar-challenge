@@ -18,8 +18,8 @@ namespace GetFastBar_challenge
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
-            StripeConfiguration.SetApiKey(ConfigurationManager.AppSettings["StripeSecretKey"]);
+            //handles authentication
+            StripeConfiguration.SetApiKey(ConfigurationManager.AppSettings["stripeSecretKey"]);
         }
     }
 }

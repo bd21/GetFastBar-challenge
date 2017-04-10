@@ -19,6 +19,8 @@ namespace GetFastBar_challenge.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private string cardId;
+        private string stripeCustomerId;
 
         public ManageController()
         {
@@ -54,6 +56,36 @@ namespace GetFastBar_challenge.Controllers
             }
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddCustomer(string stripeEmail, string stripeToken)
+        {
+            //create customer with stripeToken
+            var myCustomer = new StripeCustomerCreateOptions();
+            myCustomer.Email = stripeEmail;
+            myCustomer.SourceToken = stripeToken;
+
+            //get customerID
+            var customerService = new StripeCustomerService();
+            StripeCustomer stripeCustomer = customerService.Create(myCustomer);
+            stripeCustomerId = stripeCustomer.Id;
+
+            //get cardId from stripeCustomer
+            cardId = stripeCustomer.DefaultSourceId;
+
+            //get card information from cardId
+            var myCard = new StripeCardCreateOptions();
+            myCard.SourceToken = cardId;
+
+            var cardService = new StripeCardService();
+            StripeCard stripeCard = cardService.Get(stripeCustomerId, cardId);
+
+
+            //somehow save the customerID, cardID, and stripeCard object into the database
+
+            return RedirectToAction("Index", "Manage");
+        }
+
         //
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
@@ -83,6 +115,12 @@ namespace GetFastBar_challenge.Controllers
                 ///mine
                 StripePublishableKey = stripePublishableKey
             };
+            //if(stripeCustomerId != null)
+            //{
+            //    var cardService = new StripeCardService();
+            //    IEnumerable<StripeCard> response = cardService.List(stripeCustomerId);
+            //}
+
             return View(model);
         }
 
