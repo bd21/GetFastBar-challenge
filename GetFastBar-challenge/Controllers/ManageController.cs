@@ -61,24 +61,24 @@ namespace GetFastBar_challenge.Controllers
         public ActionResult AddCustomer(string stripeEmail, string stripeToken)
         {
             //create customer with stripeToken
-            var myCustomer = new StripeCustomerCreateOptions();
-            myCustomer.Email = stripeEmail;
-            myCustomer.SourceToken = stripeToken;
+            //var myCustomer = new StripeCustomerCreateOptions();
+            //myCustomer.Email = stripeEmail;
+            //myCustomer.SourceToken = stripeToken;
 
-            //get customerID
-            var customerService = new StripeCustomerService();
-            StripeCustomer stripeCustomer = customerService.Create(myCustomer);
-            stripeCustomerId = stripeCustomer.Id;
+            ////get customerID
+            //var customerService = new StripeCustomerService();
+            //StripeCustomer stripeCustomer = customerService.Create(myCustomer);
+            //stripeCustomerId = stripeCustomer.Id;
 
-            //get cardId from stripeCustomer
-            cardId = stripeCustomer.DefaultSourceId;
+            ////get cardId from stripeCustomer
+            //cardId = stripeCustomer.DefaultSourceId;
 
-            //get card information from cardId
-            var myCard = new StripeCardCreateOptions();
-            myCard.SourceToken = cardId;
+            ////get card information from cardId
+            //var myCard = new StripeCardCreateOptions();
+            //myCard.SourceToken = cardId;
 
-            var cardService = new StripeCardService();
-            StripeCard stripeCard = cardService.Get(stripeCustomerId, cardId);
+            //var cardService = new StripeCardService();
+            //StripeCard stripeCard = cardService.Get(stripeCustomerId, cardId);
 
 
             //somehow save the customerID, cardID, CC4, company name, expiry object into the database

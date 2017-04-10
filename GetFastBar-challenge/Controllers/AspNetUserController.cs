@@ -1,18 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using GetFastBar_challenge;
+using Microsoft.AspNet.Identity.Owin;
+using Stripe;
+using Microsoft.AspNet.Identity;
 
 namespace GetFastBar_challenge.Controllers
 {
     public class AspNetUserController : Controller
     {
         private CorrectModel db = new CorrectModel();
+        private string cardId;
+        private string stripeCustomerId;
+
 
         // GET: AspNetUser
         public ActionResult Index()
@@ -58,8 +60,47 @@ namespace GetFastBar_challenge.Controllers
             return View(aspNetUser);
         }
 
-        // GET: AspNetUser/Edit/5
-        public ActionResult Edit(string id, string customerID, string cardID, string CC4, 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddCustomer(string stripeEmail, string stripeToken)
+        {
+            //create customer with stripeToken
+            var myCustomer = new StripeCustomerCreateOptions();
+            myCustomer.Email = stripeEmail;
+            myCustomer.SourceToken = stripeToken;
+
+            //get customerID
+            var customerService = new StripeCustomerService();
+            StripeCustomer stripeCustomer = customerService.Create(myCustomer);
+            stripeCustomerId = stripeCustomer.Id;
+
+            //get cardId from stripeCustomer
+            cardId = stripeCustomer.DefaultSourceId;
+
+            //get card information from cardId
+            var myCard = new StripeCardCreateOptions();
+            myCard.SourceToken = cardId;
+
+            var cardService = new StripeCardService();
+            StripeCard stripeCard = cardService.Get(stripeCustomerId, cardId);
+
+
+            //somehow save the customerID, cardID, CC4, company name, expiry object into the database
+            string customerID = stripeCustomer.Id;
+            string cardID = stripeCustomer.DefaultSourceId;
+            string cc4 = stripeCard.Last4;
+            string company = stripeCard.Brand;
+            int month = Convert.ToInt32(stripeCard.ExpirationMonth);
+            int year = Convert.ToInt32(stripeCard.ExpirationYear);
+            DateTime expiry = new DateTime(year, month, 1);
+
+            var currentUserID = User.Identity.GetUserId();
+            this.Edit((String)currentUserID, customerID, cardID, cc4, company, expiry);
+            return RedirectToAction("Index", "Manage", "1");
+
+        }
+            // GET: AspNetUser/Edit/5
+            public ActionResult Edit(string id, string customerID, string cardID, string CC4, 
                                  string companyName, DateTime expiration)
         {
             if (id == null)

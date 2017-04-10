@@ -63,8 +63,11 @@
                 for details on setting up this ASP.NET application to support two-factor authentication.
             </p>
         </dd>
-        <dt>Current cards on file:</dt>
+        <dt>Success Status:</dt>
         <dd>
+            <p>
+                
+            </p>
         </dd>
     </dl>
             <div class="container">
@@ -73,13 +76,13 @@
                 <div class="row text-center">
 
                     <div class="col-md-3 col-sm-5 hero-feature">
-                        @using (Html.BeginForm("AddCustomer", "Manage", FormMethod.Post))
+                        @using (Html.BeginForm("AddCustomer", "AspNetUser", FormMethod.Post))
                         {
                             @Html.AntiForgeryToken()
                             <form method="POST">
                                 <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                         data-key="@Model.StripePublishableKey"
-                                        data-label="Add a new card"
+                                        data-label="Update Card"
                                         data-allow-remember-me="false"
                                         data-image="https://stripe.com/img/documentation/checkout/marketplace.png">
                                 </script>
