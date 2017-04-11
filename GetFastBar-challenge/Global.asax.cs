@@ -20,6 +20,7 @@ namespace GetFastBar_challenge
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             //handles authentication
             StripeConfiguration.SetApiKey(ConfigurationManager.AppSettings["stripeSecretKey"]);
+            
         }
     }
 }

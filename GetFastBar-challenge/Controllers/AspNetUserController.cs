@@ -11,7 +11,7 @@ namespace GetFastBar_challenge.Controllers
 {
     public class AspNetUserController : Controller
     {
-        private CorrectModel db = new CorrectModel();
+        private NewModel db = new NewModel();
         private string cardId;
         private string stripeCustomerId;
 
