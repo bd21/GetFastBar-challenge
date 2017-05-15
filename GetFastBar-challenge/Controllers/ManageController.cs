@@ -60,28 +60,7 @@ namespace GetFastBar_challenge.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddCustomer(string stripeEmail, string stripeToken)
         {
-            //create customer with stripeToken
-            //var myCustomer = new StripeCustomerCreateOptions();
-            //myCustomer.Email = stripeEmail;
-            //myCustomer.SourceToken = stripeToken;
 
-            ////get customerID
-            //var customerService = new StripeCustomerService();
-            //StripeCustomer stripeCustomer = customerService.Create(myCustomer);
-            //stripeCustomerId = stripeCustomer.Id;
-
-            ////get cardId from stripeCustomer
-            //cardId = stripeCustomer.DefaultSourceId;
-
-            ////get card information from cardId
-            //var myCard = new StripeCardCreateOptions();
-            //myCard.SourceToken = cardId;
-
-            //var cardService = new StripeCardService();
-            //StripeCard stripeCard = cardService.Get(stripeCustomerId, cardId);
-
-
-            //somehow save the customerID, cardID, CC4, company name, expiry object into the database
 
             
 
@@ -102,10 +81,8 @@ namespace GetFastBar_challenge.Controllers
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
                 : "";
 
-            ///my code
+            //my code
             string stripePublishableKey = ConfigurationManager.AppSettings["stripePublishableKey"];
-
-
             var userId = User.Identity.GetUserId();
             var model = new IndexViewModel
             {
@@ -114,10 +91,9 @@ namespace GetFastBar_challenge.Controllers
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
-                ///mine
                 StripePublishableKey = stripePublishableKey
             };
-
+            //end my code
             return View(model);
         }
 

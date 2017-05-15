@@ -85,7 +85,7 @@ namespace GetFastBar_challenge.Controllers
             StripeCard stripeCard = cardService.Get(stripeCustomerId, cardId);
 
 
-            //somehow save the customerID, cardID, CC4, company name, expiry object into the database
+            //save the customerID, cardID, CC4, company name, expiry object into the database
             string customerID = stripeCustomer.Id;
             string cardID = stripeCustomer.DefaultSourceId;
             string cc4 = stripeCard.Last4;
